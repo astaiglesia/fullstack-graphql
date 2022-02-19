@@ -5,19 +5,34 @@
 
 module.exports = {
   Query: {
-    
-  },
-  Mutation: {
-    
-  },
-  Pet: {
-    img(pet) {
-      return pet.type === 'DOG'
-        ? 'https://placedog.net/300/300'
-        : 'http://placekitten.com/300/300'
+    findUser(_, __, { models }) {
+      const user = models.User.findOne();
+      console.log(user);
+      return {
+        id: user.id,
+        username: user.username
+      }
+    }, 
+    findPets(_, __, { models }) {
+      return models.Pet.findMany();
     }
-  },
-  User: {
     
-  }
+  },
+  // Mutation: {
+    
+  // },
+
+  // Resolves the Pet Type
+  // Pet: {
+  //   img(pet) {
+  //     return pet.type === 'DOG'
+  //       ? 'https://placedog.net/300/300'
+  //       : 'http://placekitten.com/300/300'
+  //   }
+  // },
+
+  // Resolves the User Type
+  // User: {
+    
+  // }
 }
