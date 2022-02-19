@@ -12,24 +12,29 @@ module.exports = {
         id: user.id,
         username: user.username
       }
-    }, 
-    findPets(_, __, { models }) {
-      return models.Pet.findMany();
+    },
+
+    // includes optional query filter input
+    findPets(_, { input }, { models }) {
+      return models.Pet.findMany().filter( pet => (pet.name === input.name) || (pet.type === input.type))
     }
-    
   },
-  // Mutation: {
-    
-  // },
+
+  Mutation: {
+    addUser(_, { user }, { models, db }){
+      return models.User.create(user)
+    }
+  },
 
   // Resolves the Pet Type
-  // Pet: {
-  //   img(pet) {
-  //     return pet.type === 'DOG'
-  //       ? 'https://placedog.net/300/300'
-  //       : 'http://placekitten.com/300/300'
-  //   }
-  // },
+  Pet: {
+    // secondary resolver - i.e. resolves after the top level Query resolvers
+    img(pet) {
+      return pet.type === 'DOG'
+        ? 'https://placedog.net/300/300'
+        : 'http://placekitten.com/300/300'
+    }
+  },
 
   // Resolves the User Type
   // User: {
