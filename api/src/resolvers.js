@@ -21,8 +21,12 @@ module.exports = {
   },
 
   Mutation: {
-    addUser(_, { user }, { models, db }){
-      return models.User.create(user)
+    addUser(_, { input }, { models, db }){
+      return models.User.create(input);
+    },
+    addPet(_, { input }, { models, db }){
+      console.log(input)
+      return models.Pet.create(input);
     }
   },
 
